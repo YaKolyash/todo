@@ -44,6 +44,7 @@ function AppWithRedux() {
   const todolist = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
   
   // TODO
+  // изменить на todolistId:string
   function changeFilter(value: FilterValuesType, todolistId: any) { 
     dispatch(changeTodolistFilterAC(value, todolistId));
   }

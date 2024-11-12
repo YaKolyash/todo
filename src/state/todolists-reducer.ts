@@ -25,7 +25,13 @@ export type ChangeTodolistFilterActionType = {
 }
 
 
-type ActionsType = RemoveTodolistActionType | AddTodolistActionType | ChangeTodolistTitleActionType | ChangeTodolistFilterActionType;
+type ActionsType = RemoveTodolistActionType 
+                | AddTodolistActionType 
+                | ChangeTodolistTitleActionType 
+                | ChangeTodolistFilterActionType;
+
+export const todolistId1 = v1();
+export const todolistId2 = v1();
 
 const initialState: Array<TodolistType> = [];
 
