@@ -22,7 +22,8 @@ import {
   addTodolistAC 
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import { store } from "./state/store";
+import { AppRootState } from "./state/store";
+import { changeTaskStatusAC } from "./state/tasks-reducer";
 
 
 
@@ -43,7 +44,7 @@ function AppWithRedux() {
   const todolist = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
   
   // TODO
-  function changeFilter(value: FilterValuesType, todolistId: string) { 
+  function changeFilter(value: FilterValuesType, todolistId: any) { 
     dispatch(changeTodolistFilterAC(value, todolistId));
   }
 
@@ -60,7 +61,7 @@ function AppWithRedux() {
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <AppBar position="static">
         <Toolbar variant="dense">
           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
@@ -77,13 +78,14 @@ function AppWithRedux() {
         </Grid>
         <Grid container>
           {
-            todolists.map(tl => {
+            todolist.map(tl => {
              
 
               return (
                 <Grid component="div">
                     <Paper style={{padding: "10px"}}>
-                      <Todolist
+                    <Todolist
+                        changeTaskStatus={changeTaskStatusAC}
                         key={tl.id}
                         id={tl.id}
                         title={tl.title}
