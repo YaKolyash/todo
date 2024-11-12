@@ -3,7 +3,7 @@ import "./App.css";
 import {
   TaskType, 
   Todolist 
-} from "./todolist";
+} from "./Todolist";
 import { v1 } from "uuid";
 import { AddItemForm } from "./AddItemForm";
 import {
@@ -16,7 +16,7 @@ import {
 } from '@mui/material';  
 import MenuIcon from '@mui/icons-material/Menu';
 import  Grid from "@mui/material/Grid2"
-import "./appWithReducer";
+import "./AppWithReducer";
 import {
   changeTodolistFilterAC, 
   todolistsReducer, 
@@ -31,6 +31,7 @@ import {
   changeTaskTitleAC
 } from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux"
+import { store } from "./state/store";
 
 export type FilterValuesType = "all" | "active" | "completed";
   
@@ -54,46 +55,38 @@ function AppWithReducer() {
   ]);
 
   function removeTask(id: string, todolistId: string) {
-    const action = removeTaskAC(id, todolistId);
-    dispatchToTaskReducer(action);
+    dispatchToTaskReducer(removeTaskAC(id, todolistId));
   }
 
   function addTask(title: string, todolistId: string) {
-    const action = addTaskAC(title, todolistId); 
-    dispatchToTaskReducer(action);
+    dispatchToTaskReducer(addTaskAC(title, todolistId));
   }
 
   function changeStatus(id: string, isDone: boolean, todolistId: string) {
-    const action = changeTaskStatusAC(id, isDone, todolistId);
-    dispatchToTaskReducer(action);
-  }
-  //ПЕРЕСМОТРЕТЬ ВИДОС!!!!!!!!!!!! 
+    dispatchToTaskReducer(changeTaskStatusAC(id, isDone, todolistId));
+  } 
   function changeTaskTitle(id: string, newTitle: string, todolistId: string, isDone: boolean) {
-    const action = changeTaskTitleAC(id, newTitle, todolistId, isDone);
-    dispatchToTaskReducer(action);
+    dispatchToTaskReducer(changeTaskTitleAC(id, newTitle, todolistId, isDone));
   }
 
   // TODO
-  // ШОТО СТРАННОЕ ИСПРАВИТЬ!!!!!!!!!!!!!!!!!!!!
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    const action = changeTodolistFilterAC(value, todolistId)
-    dispatchToTaskReducer(action);
+    dispatchToTaskReducer(changeTodolistFilterAC(value, todolistId));
   }
 
   function removeTodolist(id: string) {
-    const action = removeTodolistAC(id)
-    dispatchToTaskReducer(action);
+    const action = removeTodolistAC(id);
+    dispatchToTasksReducer(action);
     dispatchToTodolistsReducer(action);
   };
  
   function changeTodolistTitle(id: string, title: string) {
-    const action = changeTodolistTitleAC(id, title);
-    dispatchToTodolistsReducer(action);
+    dispatchToTodolistsReducer(changeTodolistTitleAC(id, title));
   }
 
   function addTodolist(title: string) {
-    const action = addTodolistAC(title)
-    dispatchToTaskReducer(action);
+    const action = addTodolistAC(title);
+    dispatchToTasksReducer(action);
     dispatchToTodolistsReducer(action);
   }
 
@@ -138,9 +131,9 @@ function AppWithReducer() {
                       changeFilter={changeFilter}
                       addTask={addTask}
                       changeTaskStatus={changeStatus}
-                      changeTaskTitle={changeTaskTitle}
                       filter={tl.filter}
                       removeTodolist={removeTodolist}
+                      changeTaskTitle={changeTaskTitle}
                       changeTodolistTitle={changeTodolistTitle}
                       />
                     </Paper>

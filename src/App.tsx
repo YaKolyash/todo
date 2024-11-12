@@ -3,7 +3,7 @@ import "./App.css";
 import {
   TaskType, 
   Todolist 
-} from "./todolist";
+} from "./Todolist";
 import { v1 } from "uuid";
 import { AddItemForm } from "./AddItemForm";
 import {
@@ -16,7 +16,7 @@ import {
 } from '@mui/material';  
 import MenuIcon from '@mui/icons-material/Menu';
 import  Grid from "@mui/material/Grid2"
-import "./appWithReducer";
+import "./AppWithReducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
   

@@ -1,5 +1,5 @@
 import { ChangeEvent} from "react";
-import { FilterValuesType } from "./appWithRedux";
+import { FilterValuesType } from "./AppWithRedux";
 import {AddItemForm} from "./AddItemForm"
 import { EditableSpan } from "./EditableSpan";
 import {
@@ -18,6 +18,7 @@ import {
   removeTaskAC,
   changeTaskStatusAC
 } from "../src/state/tasks-reducer";
+import {store} from "./state/store";
 
 export type TaskType = {
   id: string;
@@ -107,7 +108,11 @@ export function Todolist(props: PropsType) {
           
 
           return (
-            <li key={t.id} className={t.isDone ? "is-done" : ""}>
+            <li key={t.id} className={
+                t.isDone 
+                ? "is-done" 
+                : ""
+                }>
               <Checkbox
                 onChange={onChangeHandler}
                 checked={t.isDone}
@@ -123,21 +128,33 @@ export function Todolist(props: PropsType) {
       </div>
       <div>
         <Button
-          variant={props.filter === "all" ? "contained" : "text"}
+          variant={
+            props.filter === "all" 
+            ? "contained" 
+            : "text"
+          }
           onClick={onAllClickHandler}
         >
           All
         </Button>
         <Button
           color={"primary"}
-          variant={props.filter === "active" ? "contained" : "text"}
+          variant={
+            props.filter === "active" 
+            ? "contained" 
+            : "text"
+          }
           onClick={onActiveClickHandler}
         >
           Active
         </Button>
         <Button
           color={"secondary"}
-          variant={props.filter === "completed" ? "contained" : "text"}
+          variant=
+            {props.filter === "completed" 
+              ? "contained" 
+              : "text"
+            }
           onClick={onCompletedClickHandler}
         >
           Completed

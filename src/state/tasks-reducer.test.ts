@@ -25,7 +25,7 @@ test("correct task should be deleted from correct array", () => {
         ]
     };
 
-    const action = removeTaskAC("2", "todolistId1");
+    const action = removeTaskAC("2", "todolistId2");
     const endState = tasksReducer(startState, action);
 
     expect(endState["todolistId1"].length).toBe(3);
@@ -120,7 +120,7 @@ test("new property with new array should be added when new todolist is added", (
     const endState = tasksReducer(startState, action);
 
     const keys = Object.keys(endState);
-    const newKey = keys.find(k => k !== "todolist1" && k !== "todolist2")
+    const newKey = keys.find(k => k !== "todolistId1" && k !== "todolistId2")
     if(!newKey) {
         throw Error("new key should be added")
     }
@@ -149,5 +149,5 @@ test("property with todolistId should be deleted", () => {
     const keys = Object.keys(endState);
 
     expect(keys.length).toBe(1);
-    expect(endState["todolistId2"]).not.toBeUndefined();
+    expect(endState["todolistId2"]).toBeUndefined();
 })
