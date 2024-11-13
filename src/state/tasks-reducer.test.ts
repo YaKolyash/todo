@@ -5,7 +5,7 @@ import {
     changeTaskStatusAC,
     changeTaskTitleAC
 } from "./tasks-reducer";
-import { TasksStateType } from "../App";
+import { TasksStateType } from "../AppWithRedux";
 import { 
     addTodolistAC, 
     removeTodolistAC 
@@ -95,7 +95,7 @@ test("title of specified task should be changed", () => {
         ]
     };
 
-    const action = changeTaskTitleAC("2", "Milkyway", "todolistId2", false);
+    const action = changeTaskTitleAC("2", false, "todolistId2", "Milkyway");
     const endState = tasksReducer(startState, action);
 
     expect(endState["todolistId2"][1].title).toBe("Milkyway");

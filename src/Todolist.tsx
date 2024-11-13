@@ -18,7 +18,7 @@ import {
   removeTaskAC,
   changeTaskStatusAC
 } from "../src/state/tasks-reducer";
-// import {store} from "./state/store";
+
 
 export type TaskType = {
   id: string;
@@ -33,11 +33,11 @@ type PropsType = {
     value: FilterValuesType, 
     todolistId: string
   ) => void;
-  changeTaskStatus: (
-    id: string,
-    isDone: boolean,
-    todolistId: string
-  ) => void;
+  // changeTaskStatus: (
+  //   id: string,
+  //   isDone: boolean,
+  //   todolistId: string
+  // ) => void;
   filter: FilterValuesType;
   removeTodolist: (
     todolistId: string
@@ -54,8 +54,9 @@ export function Todolist(props: PropsType) {
   const dispatch = useDispatch();
 
   const removeTodolist = () => {
-    props.removeTodolist(props.id);
-  };
+    props.removeTodolist(props.id)
+  }
+
   const changeTodolistTitle = (title: string) => {
     props.changeTodolistTitle(props.id, title);
   };
@@ -101,6 +102,7 @@ export function Todolist(props: PropsType) {
             let newIsDoneValue = e.currentTarget.checked;
             dispatch(changeTaskStatusAC(t.id, newIsDoneValue, props.id))
           };
+
           // заменить на newValue: string
           const onTitleChangeHandler = (newValue: any) => {
             dispatch(changeTaskStatusAC(t.id, newValue, props.id));

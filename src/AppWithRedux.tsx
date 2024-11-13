@@ -1,4 +1,3 @@
-// import { useReducer } from "react";
 import "./AppWithRedux";
 import "./App.css";
 import {
@@ -16,7 +15,6 @@ import {
 } from '@mui/material';  
 import MenuIcon from '@mui/icons-material/Menu';
 import  Grid from "@mui/material/Grid2"
-import "./AppWithReducer";
 import {
   changeTodolistFilterAC, 
   removeTodolistAC, 
@@ -25,14 +23,6 @@ import {
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import { AppRootState } from "./state/store";
-import {
-  changeTaskStatusAC,
-  changeTaskTitleAC,
-  addTaskAC,
-  removeTaskAC
-} from "./state/tasks-reducer";
-// import { v1 } from "uuid";  
-// import { todolistsReducer } from "./state/todolists-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
   
@@ -47,30 +37,8 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
-  // let todolistId1 = v1();
-  // let todolistId2 = v1();
-  
   const dispatch = useDispatch();
   const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
-  const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks);
-
-
-  function removeTask(id: string, todolistId: string) {
-    dispatch(removeTaskAC(id, todolistId));
-  }
-
-  function addTask(title: string, todolistId: string) {
-    dispatch(addTaskAC(title, todolistId));
-  }
-
-  function changeStatus(id: string, isDone: boolean, todolistId: string) {
-    dispatch(changeTaskStatusAC(id, isDone, todolistId));
-  } 
-
-  // выяснить почему здесь newTitle: string
-  function changeTaskTitle(id: string, isDone: boolean, todolistId: string) {
-    dispatch(changeTaskTitleAC(id, isDone, todolistId));
-  } 
 
   // TODO
   // изменить на todolistId: string
@@ -109,13 +77,10 @@ function AppWithRedux() {
         <Grid container>
           {
             todolists.map(tl => {
-             
-
               return (
                 <Grid component="div">
                     <Paper style={{padding: "10px"}}>
                     <Todolist
-                        changeTaskStatus={changeTaskStatusAC}
                         key={tl.id}
                         id={tl.id}
                         title={tl.title}
