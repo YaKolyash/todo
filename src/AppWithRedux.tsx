@@ -1,3 +1,4 @@
+import { useReducer } from "react";
 import "./App.css";
 import {
   TaskType, 
@@ -22,10 +23,15 @@ import {
   addTodolistAC 
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import { AppRootState } from "./state/store";
-import { changeTaskStatusAC } from "./state/tasks-reducer";
-
-
+// import { AppRootState } from "./state/store";
+import {
+  changeTaskStatusAC,
+  changeTaskTitleAC,
+  addTaskAC,
+  removeTaskAC
+} from "./state/tasks-reducer";
+import { v1 } from "uuid";  
+import { todolistsReducer } from "./state/todolists-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
   
@@ -42,14 +48,37 @@ export type TasksStateType = {
 function AppWithRedux() {
   const dispatch = useDispatch();
   const todolist = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
-  
+
+  let todolistId1 = v1();
+  let todolistId2 = v1();
+
+  let [todolist] = useReducer(todolistsReducer, [
+    { id: todolistId1, title: "What to learn", filter: "all" },
+    { id: todolistId2, title: "What to buy", filter: "all" }
+  ]);
+
+  function removeTask(id: string, todolistId: string) {
+    dispatch(removeTaskAC(id, todolistId));
+  }
+
+  function addTask(title: string, todolistId: string) {
+    dispatch(addTaskAC(title, todolistId));
+  }
+
+  function changeStatus(id: string, isDone: boolean, todolistId: string) {
+    dispatch(changeTaskStatusAC(id, isDone, todolistId));
+  } 
+  function changeTaskTitle(id: string, isDone: boolean, todolistId: string) {
+    dispatch(changeTaskTitleAC(id, isDone, todolistId));
+  } 
+
   // TODO
-  // изменить на todolistId:string
-  function changeFilter(value: FilterValuesType, todolistId: any) { 
+  // изменить на todolistId: string
+  function changeFilter(value: FilterValuesType, todolistId: any) {
     dispatch(changeTodolistFilterAC(value, todolistId));
   }
 
-  function removeTodolist(id: string) { 
+  function removeTodolist(id: string) {
     dispatch(removeTodolistAC(id));
   };
  

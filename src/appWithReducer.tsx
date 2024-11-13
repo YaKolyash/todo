@@ -30,8 +30,8 @@ import {
   changeTaskStatusAC, 
   changeTaskTitleAC
 } from "./state/tasks-reducer";
-import {useDispatch, useSelector} from "react-redux"
-import { store } from "./state/store";
+import {useDispatch } from "react-redux"
+// import { store } from "./state/store";
 
 export type FilterValuesType = "all" | "active" | "completed";
   
@@ -46,48 +46,46 @@ export type TasksStateType = {
 }
 
 function AppWithReducer() {
+  const dispatch = useDispatch()
+
   let todolistId1 = v1();
   let todolistId2 = v1();
 
-  let [todolists, dispatchToTodolistsReducer] = useReducer(todolistsReducer, [
+  let [todolists] = useReducer(todolistsReducer, [
     { id: todolistId1, title: "What to learn", filter: "all" },
     { id: todolistId2, title: "What to buy", filter: "all" }
   ]);
 
   function removeTask(id: string, todolistId: string) {
-    dispatchToTaskReducer(removeTaskAC(id, todolistId));
+    dispatch(removeTaskAC(id, todolistId));
   }
 
   function addTask(title: string, todolistId: string) {
-    dispatchToTaskReducer(addTaskAC(title, todolistId));
+    dispatch(addTaskAC(title, todolistId));
   }
 
   function changeStatus(id: string, isDone: boolean, todolistId: string) {
-    dispatchToTaskReducer(changeTaskStatusAC(id, isDone, todolistId));
+    dispatch(changeTaskStatusAC(id, isDone, todolistId));
   } 
-  function changeTaskTitle(id: string, newTitle: string, todolistId: string, isDone: boolean) {
-    dispatchToTaskReducer(changeTaskTitleAC(id, newTitle, todolistId, isDone));
-  }
+  function changeTaskTitle(id: string, isDone: boolean, todolistId: string) {
+    dispatch(changeTaskTitleAC(id, isDone, todolistId));
+  } 
 
   // TODO
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    dispatchToTaskReducer(changeTodolistFilterAC(value, todolistId));
+    dispatch(changeTodolistFilterAC(value, todolistId));
   }
 
   function removeTodolist(id: string) {
-    const action = removeTodolistAC(id);
-    dispatchToTasksReducer(action);
-    dispatchToTodolistsReducer(action);
+    dispatch(removeTodolistAC(id));
   };
  
   function changeTodolistTitle(id: string, title: string) {
-    dispatchToTodolistsReducer(changeTodolistTitleAC(id, title));
+    dispatch(changeTodolistTitleAC(id, title));
   }
 
   function addTodolist(title: string) {
-    const action = addTodolistAC(title);
-    dispatchToTasksReducer(action);
-    dispatchToTodolistsReducer(action);
+    dispatch(addTodolistAC(title));
   }
 
   return (
@@ -112,11 +110,11 @@ function AppWithReducer() {
               let tasksForTodoList = tasks[tl.id];
 
               if (tl.filter === "active") {
-                tasksForTodoList = tasksForTodoList.filter((t) => t.isDone === false);
+                tasksForTodoList = tasksForTodoList.filter((tl) => tl.isDone === false);
               }
 
               if (tl.filter === "completed") {
-                tasksForTodoList = tasksForTodoList.filter((t) => t.isDone === true);
+                tasksForTodoList = tasksForTodoList.filter((tl) => tl.isDone === true);
               }
 
               return (
