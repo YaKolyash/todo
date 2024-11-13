@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+// import { useReducer } from "react";
+import "./AppWithRedux";
 import "./App.css";
 import {
   TaskType, 
@@ -23,15 +24,15 @@ import {
   addTodolistAC 
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-// import { AppRootState } from "./state/store";
+import { AppRootState } from "./state/store";
 import {
   changeTaskStatusAC,
   changeTaskTitleAC,
   addTaskAC,
   removeTaskAC
 } from "./state/tasks-reducer";
-import { v1 } from "uuid";  
-import { todolistsReducer } from "./state/todolists-reducer";
+// import { v1 } from "uuid";  
+// import { todolistsReducer } from "./state/todolists-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
   
@@ -46,16 +47,13 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
+  // let todolistId1 = v1();
+  // let todolistId2 = v1();
+  
   const dispatch = useDispatch();
-  const todolist = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
+  const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
+  const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks);
 
-  let todolistId1 = v1();
-  let todolistId2 = v1();
-
-  let [todolist] = useReducer(todolistsReducer, [
-    { id: todolistId1, title: "What to learn", filter: "all" },
-    { id: todolistId2, title: "What to buy", filter: "all" }
-  ]);
 
   function removeTask(id: string, todolistId: string) {
     dispatch(removeTaskAC(id, todolistId));
@@ -68,6 +66,8 @@ function AppWithRedux() {
   function changeStatus(id: string, isDone: boolean, todolistId: string) {
     dispatch(changeTaskStatusAC(id, isDone, todolistId));
   } 
+
+  // выяснить почему здесь newTitle: string
   function changeTaskTitle(id: string, isDone: boolean, todolistId: string) {
     dispatch(changeTaskTitleAC(id, isDone, todolistId));
   } 
@@ -108,7 +108,7 @@ function AppWithRedux() {
         </Grid>
         <Grid container>
           {
-            todolist.map(tl => {
+            todolists.map(tl => {
              
 
               return (

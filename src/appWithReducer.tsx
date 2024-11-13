@@ -1,10 +1,11 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import "./App.css";
 import {
   TaskType, 
   Todolist 
 } from "./Todolist";
 import { v1 } from "uuid";
+import "./AppWithReducer";
 import { AddItemForm } from "./AddItemForm";
 import {
   AppBar, 
@@ -56,6 +57,48 @@ function AppWithReducer() {
     { id: todolistId2, title: "What to buy", filter: "all" }
   ]);
 
+  let [tasks, setTasks] = useState<TasksStateType>({
+    [todolistId1]: [
+      {
+        id: v1(),
+        title: "СSS",
+        isDone: true
+      },
+      {
+        id: v1(),
+        title: "JS",
+        isDone: true
+      },
+      {
+        id: v1(),
+        title: "REACT",
+        isDone: false
+      },
+      {
+        id: v1(),
+        title: "REDUX",
+        isDone: false
+      },
+      {
+        id: v1(),
+        title: "SQL",
+        isDone: false
+      }
+    ],
+    [todolistId2]: [
+      {
+        id: v1(),
+        title: "Book",
+        isDone: true
+      },
+      {
+        id: v1(),
+        title: "Milk",
+        isDone: true
+      }
+    ]
+  });
+
   function removeTask(id: string, todolistId: string) {
     dispatch(removeTaskAC(id, todolistId));
   }
@@ -72,7 +115,8 @@ function AppWithReducer() {
   } 
 
   // TODO
-  function changeFilter(value: FilterValuesType, todolistId: string) {
+  // изменить на todolistId: string
+  function changeFilter(value: FilterValuesType, todolistId: any) {
     dispatch(changeTodolistFilterAC(value, todolistId));
   }
 
@@ -106,15 +150,16 @@ function AppWithReducer() {
         </Grid>
         <Grid container>
           {
-            todolists.map((tl) => {
-              let tasksForTodoList = tasks[tl.id];
+            todolists.map(tl => {
+              let allTodolistTasks = tasks[tl.id];
+              let tasksForTodolist = allTodolistTasks;
 
               if (tl.filter === "active") {
-                tasksForTodoList = tasksForTodoList.filter((tl) => tl.isDone === false);
+                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
               }
 
               if (tl.filter === "completed") {
-                tasksForTodoList = tasksForTodoList.filter((tl) => tl.isDone === true);
+                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
               }
 
               return (
@@ -124,7 +169,7 @@ function AppWithReducer() {
                       key={tl.id}
                       id={tl.id}
                       title={tl.title}
-                      tasks={tasksForTodoList}
+                      tasks={tasksForTodolist}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}

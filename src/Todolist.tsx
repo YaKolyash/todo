@@ -18,7 +18,7 @@ import {
   removeTaskAC,
   changeTaskStatusAC
 } from "../src/state/tasks-reducer";
-import {store} from "./state/store";
+// import {store} from "./state/store";
 
 export type TaskType = {
   id: string;
@@ -101,8 +101,8 @@ export function Todolist(props: PropsType) {
             let newIsDoneValue = e.currentTarget.checked;
             dispatch(changeTaskStatusAC(t.id, newIsDoneValue, props.id))
           };
-
-          const onTitleChangeHandler = (newValue: string) => {
+          // заменить на newValue: string
+          const onTitleChangeHandler = (newValue: any) => {
             dispatch(changeTaskStatusAC(t.id, newValue, props.id));
           };
           
