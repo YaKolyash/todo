@@ -46,7 +46,7 @@ function AppWithRedux() {
   // TODO
   function changeFilter(value: FilterValuesType, todolistId: string) {
     dispatch(changeTodolistFilterAC(value, todolistId));
-  }
+  };
 
   function removeTodolist(id: string) {
     dispatch(removeTodolistAC(id));
@@ -54,11 +54,11 @@ function AppWithRedux() {
  
   function changeTodolistTitle(id: string, title: string) {
     dispatch(changeTodolistTitleAC(id, title));
-  }
+  };
 
   function addTodolist(title: string) {
     dispatch(addTodolistAC(title));
-  }
+  };
 
   return (
     <div className="app">
@@ -73,7 +73,7 @@ function AppWithRedux() {
         </Toolbar>
       </AppBar>
       <Container fixed>
-        <Grid container spacing={3} style={{padding: "10px"}}>
+        <Grid container spacing={3} style={{ padding: "10px" }}>
           <AddItemForm addItem={addTodolist}/>
         </Grid>
         <Grid container>
@@ -82,7 +82,7 @@ function AppWithRedux() {
               return (
                 <Grid component="div">
                     <Paper style={{padding: "10px"}}>
-                    <Todolist
+                      <Todolist
                         key={tl.id}
                         id={tl.id}
                         title={tl.title}

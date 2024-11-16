@@ -102,11 +102,7 @@ export function Todolist(props: PropsType) {
           };  
 
           return (
-            <li key={t.id} className={
-                t.isDone 
-                ? "is-done" 
-                : ""
-                }>
+            <li key={t.id} className={t.isDone ? "is-done" : ""}>
               <Checkbox
                 onChange={onChangeHandler}
                 checked={t.isDone}

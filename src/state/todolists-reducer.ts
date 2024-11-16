@@ -56,18 +56,22 @@ export const todolistsReducer = (
         case "CHANGE-TODOLIST-TITLE": {
             const todolist = state.find(tl => tl.id === action.id);
             if(todolist) {   
-              todolist.title = action.title;
+                todolist.title = action.title;
             }
+            
             return [...state]
         }
         case "CHANGE-TODOLIST-FILTER": {
-            const todolist = state.find(tl => tl.id === action.id);
-            if(todolist) {
-              todolist.filter = action.filter;
-            }
-            return {
-                ...state
-            }
+            // const todolist = state.find(tl => tl.id === action.id);
+            // if(todolist) {
+            //   todolist.filter = action.filter;
+            // }
+            // return {
+            //     ...state
+            // }
+            return state.map(tl => 
+                tl.id === action.id ? { ...tl, filter: action.filter } : tl
+            );
         }
     
         default:
@@ -100,14 +104,14 @@ export const changeTodolistTitleAC = (
 ): ChangeTodolistTitleActionType => {
     return {
         type: "CHANGE-TODOLIST-TITLE",
-        id: todolistId,     
-        title
+        title,
+        id: todolistId     
     }
 }
 
-export const changeTodolistFilterAC = (
-    todolistId: string, 
-    filter: FilterValuesType
+export const changeTodolistFilterAC = ( 
+    filter: FilterValuesType,
+    todolistId: string
 ): ChangeTodolistFilterActionType => {
     return {
         type: "CHANGE-TODOLIST-FILTER",  
