@@ -21,7 +21,10 @@ import {
   changeTodolistTitleAC, 
   addTodolistAC 
 } from "./state/todolists-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {
+  useDispatch,
+  useSelector
+} from "react-redux";
 import { AppRootState } from "./state/store";
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -41,8 +44,7 @@ function AppWithRedux() {
   const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
 
   // TODO
-  // изменить на todolistId: string
-  function changeFilter(value: FilterValuesType, todolistId: any) {
+  function changeFilter(value: FilterValuesType, todolistId: string) {
     dispatch(changeTodolistFilterAC(value, todolistId));
   }
 

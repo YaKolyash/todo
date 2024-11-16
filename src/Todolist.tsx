@@ -40,7 +40,7 @@ type PropsType = {
   ) => void;
   changeTodolistTitle: (
     todolistId: string, 
-    newTitle: string
+    title: string
   ) => void;
 };
 
@@ -56,7 +56,6 @@ export function Todolist(props: PropsType) {
   const changeTodolistTitle = (title: string) => {
     props.changeTodolistTitle(props.id, title);
   };
-
 
   const onAllClickHandler = () => {
     props.changeFilter("all", props.id);
@@ -79,7 +78,6 @@ export function Todolist(props: PropsType) {
     tasksForTodoList = allTodolistTasks.filter(t => t.isDone === true);
   }
 
-
   return (
     <div>
       <h3>
@@ -99,11 +97,9 @@ export function Todolist(props: PropsType) {
             dispatch(changeTaskStatusAC(t.id, newIsDoneValue, props.id))
           };
 
-          // заменить на newValue: string
-          const onTitleChangeHandler = (newValue: any) => {
-            dispatch(changeTaskTitleAC(t.id, newValue, props.id, title));
-          };
-          
+          const onTitleChangeHandler = (newValue: string) => {
+            dispatch(changeTaskTitleAC(t.id, newValue, props.id));
+          };  
 
           return (
             <li key={t.id} className={
