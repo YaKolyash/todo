@@ -83,8 +83,8 @@ function AppWithRedux() {
                 <Grid component="div">
                     <Paper style={{padding: "10px"}}>
                       <Todolist
-                        key={tl.id}
                         id={tl.id}
+                        key={tl.id}
                         title={tl.title}
                         changeFilter={changeFilter}
                         filter={tl.filter}
